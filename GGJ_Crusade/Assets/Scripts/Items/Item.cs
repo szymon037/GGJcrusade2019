@@ -2,15 +2,18 @@
 using UnityEngine;
 
 public enum ItemType {
-	Consumable,
+	Food,
+	Drink,
 	Material,
-	UsableItem
+	Weapon,
+	Armor
 }
 
 [CreateAssetMenu(fileName = "New Item", menuName = "Item")]
 public class Item : ScriptableObject {
 	public uint stackSize = 0;
 	public uint maxStackSize = 0;
+	public uint ID = 0;
 
 	public Sprite itemSprite = null;
 
@@ -18,4 +21,6 @@ public class Item : ScriptableObject {
 	public string description = null;
 
 	public ItemType type;
+
+	public float itemEffectValue;
 }

@@ -8,12 +8,14 @@ public class PlayerStats {
 		public float hunger;
 		public float thirst;
 		public float stamina;
+		public float speed;
 
 		public Stats(float _health, float _hunger, float _thirst, float _stamina) {
 			this.health = _health;
 			this.hunger = _hunger;
 			this.thirst = _thirst;
 			this.stamina = _stamina;
+			this.speed = 5f;
 		}
 	}
 
