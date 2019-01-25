@@ -11,11 +11,17 @@ public class InventorySlot : MonoBehaviour {
 	void Awake() {
 		this.itemImage = gameObject.GetComponentInChildren<Image>();
 		this.slotButton = gameObject.GetComponentInChildren<Button>();
+		this.slotButton.onClick.AddListener(() => Inventory.instance.PickFromSlot());
+		this.itemImage.enabled = false;
 	}
 
 	public void Add(Item item) {
 		this.itemRef = item;
-		this.itemImage.sprite = item.itemSprite;
+		try {
+			this.itemImage.sprite = item.itemSprite;
+		} catch (System.Exception) {
+
+		}
 		this.itemImage.enabled = true;
 	}
 

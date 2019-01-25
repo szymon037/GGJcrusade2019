@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\Controllers\XboxController.cs" />
      <Compile Include="Assets\Scripts\CraftingManager.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\HouseStorage.cs" />
      <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\InventorySlot.cs" />

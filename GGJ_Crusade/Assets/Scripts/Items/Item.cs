@@ -23,4 +23,5 @@ public class Item : ScriptableObject {
 	public ItemType type;
 
 	public float itemEffectValue;
+	public float durability;
 }

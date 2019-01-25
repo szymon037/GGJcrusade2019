@@ -2,15 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HouseStorage : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
+public class HouseStorage : Inventory {
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

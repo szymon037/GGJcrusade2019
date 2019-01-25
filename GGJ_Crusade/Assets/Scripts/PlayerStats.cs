@@ -32,6 +32,7 @@ public class PlayerStats {
 		flags["isHit"] = false;
 		flags["hungerBelowZero"] = false;
 		flags["thirstBelowZero"] = false;
+		flags["atHome"] = false;
 	}
 
 	public static PlayerStats GetInstance() {
@@ -51,9 +52,11 @@ public class PlayerStats {
 
 	public void ModifyHungerMeter(float value) {
 		this.playerStatistics.hunger += value;
+		if (this.playerStatistics.hunger < 0f) this.playerStatistics.hunger = 0f;
 	}
 
 	public void ModifyThirstMeter(float value) {
 		this.playerStatistics.thirst += value;
+		if (this.playerStatistics.thirst < 0f) this.playerStatistics.thirst = 0f;
 	}
 }
