@@ -9,9 +9,10 @@ public class PlayerStats {
 		public float thirst;
 		public float stamina;
 		public float speed;
+		public float maxHealth;
 
 		public Stats(float _health, float _hunger, float _thirst, float _stamina) {
-			this.health = _health;
+			this.health = this.maxHealth = _health;
 			this.hunger = _hunger;
 			this.thirst = _thirst;
 			this.stamina = _stamina;
@@ -26,6 +27,9 @@ public class PlayerStats {
 	public Stats playerStatistics;
 	public Dictionary<string, bool> flags;
 	public System.Func<Vector3, float, int> attack = null;
+
+	public float hitTimer = 0f;
+	public float attackTimer = 0f;
 
 	private PlayerStats() {
 		playerStatistics = new Stats(100f, 100f, 100f, 100f);
@@ -45,6 +49,13 @@ public class PlayerStats {
 	public void ReduceHealth(float value) {
 		this.playerStatistics.health -= value;
 		if (this.playerStatistics.health < 0f) this.playerStatistics.health = 0f; 
+		this.flags["isHit"] = true;
+		hitTimer = 0.5f;
+	}
+
+	public void RestoreHealth(float value) {
+		this.playerStatistics.health += value;
+		if (this.playerStatistics.health > this.playerStatistics.maxHealth) this.playerStatistics.health = this.playerStatistics.maxHealth;
 	}
 
 	public void ReduceStamina(float value) {

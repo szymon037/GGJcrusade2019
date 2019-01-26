@@ -31,6 +31,7 @@ public class InventorySlot : MonoBehaviour {
 		}
 		this.stackSize += amount;
 		this.itemImage.enabled = true;
+		this.itemDurability = item.durability;
 	}
 
 	public void Clear() {

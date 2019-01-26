@@ -11,13 +11,4 @@ public class Recipe {
 			this.resourcesNeeded[pair.item1] = pair.item2;
 		}
 	}
-	// public void Display() {
-	// 	Debug.Log(itemNameToCreate);
-	// 	string result = "";
-	// 	foreach (var entry in resourcesNeeded) {
-	// 		result += entry.Key + " : " + entry.Value.ToString() + ", ";
-	// 	}
-	// 	Debug.Log(result);
-	// 	Debug.Log("leaving...");
-	// }
 }

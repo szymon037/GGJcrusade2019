@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿#define DEBUG
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-
+using System.Linq;
 
 /*TODO: UŻYĆ SPRITE RENDERERA ABY DOSTAĆ SIĘ DO SPRITE'A I PODMIENIĆ*/
 public class Inventory : MonoBehaviour {
@@ -21,6 +22,14 @@ public class Inventory : MonoBehaviour {
 	public RectTransform inventoryPanel;
 	public RectTransform craftingWindow;
 
+	public Transform activeBar;
+	public Transform playerInventory;
+
+	public Transform targetPlayerInventory;
+	public Transform targetActiveBar;
+
+	public Transform houseWindow;
+
 	public Item tempItem = null;
 
 	public bool pickingUp = false;
@@ -29,10 +38,15 @@ public class Inventory : MonoBehaviour {
 
 	public InventorySlot currentlyPickedFrom = null;
 
+
+
 	void Awake() {
 		inventoryPanel.gameObject.SetActive(false);
 		craftingWindow.gameObject.SetActive(false);
+		houseWindow.gameObject.SetActive(false);
 		pickUpImage.enabled = false;
+		playerInventory = inventoryPanel.transform.GetChild(0);
+		activeBar = inventoryPanel.transform.GetChild(1);
 		foreach (Transform child in inventoryPanel.transform.GetChild(0)) {
 			slots.Add(child.gameObject.GetComponent<InventorySlot>());
 		}
@@ -45,6 +59,44 @@ public class Inventory : MonoBehaviour {
 		instance = this;
 		if (Input.GetKeyDown(KeyCode.I)) {
 			inventoryPanel.gameObject.SetActive(!inventoryPanel.gameObject.activeSelf);
+		}
+		#if DEBUG 
+			if (Input.GetKeyDown(KeyCode.H)) PlayerStats.GetInstance().flags["atHome"] = !PlayerStats.GetInstance().flags["atHome"];
+		#endif
+		if (PlayerStats.GetInstance().flags["atHome"]) {
+			houseWindow.gameObject.SetActive(!false);
+			List<Transform> first = new List<Transform>(), second = new List<Transform>();
+			foreach (Transform child in playerInventory) {
+				first.Add(child);
+			}	
+			first = first.OrderBy(c => c.name).ToList();
+			foreach (Transform child in activeBar) {
+				second.Add(child);
+			}
+			second = second.OrderBy(c => c.name).ToList();
+			foreach (var c in first) {
+				c.SetParent(targetPlayerInventory);
+			}
+			foreach (var c in second) {
+				c.SetParent(targetActiveBar);
+			}
+		} else {
+			houseWindow.gameObject.SetActive(false);
+			List<Transform> first = new List<Transform>(), second = new List<Transform>();
+			foreach (Transform child in targetPlayerInventory) {
+				first.Add(child);
+			}	
+			first = first.OrderBy(c => c.name).ToList();
+			foreach (Transform child in targetActiveBar) {
+				second.Add(child);
+			}
+			second = second.OrderBy(c => c.name).ToList();
+			foreach (var c in first) {
+				c.SetParent(playerInventory);
+			}
+			foreach (var c in second) {
+				c.SetParent(activeBar);
+			}
 		}
 	}
 

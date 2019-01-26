@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Linq;
 
 public class MainCharacterBehaviour : MonoBehaviour {
 
@@ -11,18 +13,26 @@ public class MainCharacterBehaviour : MonoBehaviour {
 	public static Vector3 playerPosition = new Vector3(0f, 0,0f);
 	private float constCameraY = 0f;
 	private WaitForSeconds waitTime = new WaitForSeconds(0.25f);
+	public Image keyPrompt = null;
 
 	// Use this for initialization
 	void Start () {
 		keyboard = GetComponent<Keyboard>();
 		xboxpad = GetComponent<XboxController>();
-		StartCoroutine("InputCheck");
+		StartCoroutine("InteractionCheck");
 		constCameraY = playerCamera.transform.position.y;
+		keyPrompt.enabled = false;
 	}
 
 	void Update() {
 		playerCamera.transform.position = new Vector3(this.transform.position.x, constCameraY, this.transform.position.z);
 		playerPosition = this.transform.position;
+
+		if (PlayerStats.GetInstance().hitTimer > 0f) {
+			PlayerStats.GetInstance().hitTimer -= Time.deltaTime;
+		} else {
+			PlayerStats.GetInstance().flags["isHit"] = false;
+		}
 	}
 
 	void GamepadCheck() {
@@ -40,6 +50,24 @@ public class MainCharacterBehaviour : MonoBehaviour {
 		while (true) {
 			GamepadCheck();
 			yield return waitTime;
+		}
+	}
+
+	bool CheckForInteractions() {
+		Collider[] caught = Physics.OverlapSphere(this.transform.position, 1.2f);
+		foreach (var c in caught) {
+			//Debug.Log(c.name);
+			if (c.gameObject.CompareTag("Interactable")) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	IEnumerator InteractionCheck() {
+		while (true) {
+			keyPrompt.enabled = CheckForInteractions();
+			yield return new WaitForSeconds(0.2f);
 		}
 	}
 

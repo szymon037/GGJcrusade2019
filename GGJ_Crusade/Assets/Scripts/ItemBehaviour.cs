@@ -11,12 +11,6 @@ public class ItemBehaviour : MonoBehaviour {
 	public static Transform player = null;
 	public float minDistance;
 
-	// void Start () {
-	// 	minDistance = 1.2f;
-	// 	objSprite = item.itemSprite;
-	// 	itemAmount = (uint)Random.Range(1, item.maxStackSize);
-	// 	if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
-	// }
 	void Start() {
 		Init(item);
 	}
