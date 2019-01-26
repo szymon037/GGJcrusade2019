@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Recipe {
 	public string itemNameToCreate;
+	public uint amountOfItemToCreate;
 	public Dictionary<string, uint> resourcesNeeded = new Dictionary<string, uint>();
 	public Recipe(string name, params Pair<string, uint>[] resources) {
 		this.itemNameToCreate = name;

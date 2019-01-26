@@ -67,6 +67,7 @@
      <Compile Include="Assets\Scripts\MainCharacterBehaviour.cs" />
      <Compile Include="Assets\Scripts\Pair.cs" />
      <Compile Include="Assets\Scripts\PlayerStats.cs" />
+     <Compile Include="Assets\Scripts\ReferenceInventorySlot.cs" />
      <None Include="Assets\JsonDotNet\link.xml" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Maciek/Desktop/GGJ/GGJcrusade2019/GGJ_Crusade/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
