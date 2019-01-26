@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
+/*TODO: UŻYĆ SPRITE RENDERERA ABY DOSTAĆ SIĘ DO SPRITE'A I PODMIENIĆ*/
 public class Inventory : MonoBehaviour {
 	public List<InventorySlot> activeItemBarSlots = new List<InventorySlot>();
 
@@ -80,16 +82,23 @@ public class Inventory : MonoBehaviour {
 		switch (activeSlot.itemRef.type) {
 			case ItemType.Food:
 				PlayerStats.GetInstance().ModifyHungerMeter(activeSlot.itemRef.itemEffectValue);
-				activeSlot.Clear();
+//				activeSlot.Clear();
+				activeSlot.stackSize--;
+				if (activeSlot.stackSize == 0) activeSlot.Clear();
 				break;
 			case ItemType.Drink:
 				PlayerStats.GetInstance().ModifyThirstMeter(activeSlot.itemRef.itemEffectValue);
-				activeSlot.Clear();
+//				activeSlot.Clear();
+				activeSlot.stackSize--;
+				if (activeSlot.stackSize == 0) activeSlot.Clear();
 				break;
 			case ItemType.Material: 
 				break;
 			case ItemType.Weapon:
 				//miejsce na atak
+				int numberOfHits = PlayerStats.GetInstance().attack(MainCharacterBehaviour.lookDirection, activeSlot.itemRef.itemEffectValue);
+				activeSlot.itemDurability -= numberOfHits * activeSlot.itemRef.durabilityLostPerHit;
+				if (activeSlot.itemDurability <= 0f) activeSlot.Clear();
 				break;
 			case ItemType.Armor: 
 				break;
@@ -122,6 +131,7 @@ public class Inventory : MonoBehaviour {
 					temp.parent.GetComponent<InventorySlot>().Add(currentlyPickedFrom.itemRef, currentlyPickedFrom.stackSize);
 					currentlyPickedFrom.Clear();
 					currentlyPickedFrom = null;
+					temp.parent.GetComponent<InventorySlot>().itemImage.sprite = temp.parent.GetComponent<InventorySlot>().itemRef.itemSprite;
 					return;
 				} else {
 					Debug.Log("Swapping");

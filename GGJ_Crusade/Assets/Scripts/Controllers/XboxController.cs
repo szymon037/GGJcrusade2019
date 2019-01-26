@@ -9,6 +9,7 @@ public class XboxController : MonoBehaviour {
 		float x = 0f, z = 0f;
 		x = Input.GetAxis("GamepadHorizontal") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
 		z = Input.GetAxis("GamepadVertical") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
+		MainCharacterBehaviour.lookDirection = new Vector3(x, 0f, z).normalized;
 		transform.Translate(new Vector3(x, 0, z));
 	}
 }

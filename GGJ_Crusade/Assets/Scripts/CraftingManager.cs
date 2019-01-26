@@ -74,11 +74,8 @@ public class CraftingManager : MonoBehaviour {
 	}
 
 	public GameObject GenerateItem(Item item) {
-		uint amount = (uint)Random.Range(1, item.maxStackSize);
 		GameObject handle = new GameObject();
-		ItemBehaviour beh = handle.AddComponent<ItemBehaviour>() as ItemBehaviour;
-		beh.objSprite = item.itemSprite;
-		beh.itemAmount = amount;
+		(handle.AddComponent<ItemBehaviour>() as ItemBehaviour).Init(item);
 		return handle;
 	}
 }

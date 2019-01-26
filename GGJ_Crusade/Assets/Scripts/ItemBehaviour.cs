@@ -11,16 +11,18 @@ public class ItemBehaviour : MonoBehaviour {
 	public static Transform player = null;
 	public float minDistance;
 
-	void Start () {
-		minDistance = 1.2f;
-		objSprite = item.itemSprite;
-		itemAmount = (uint)Random.Range(1, item.maxStackSize);
-		if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
+	// void Start () {
+	// 	minDistance = 1.2f;
+	// 	objSprite = item.itemSprite;
+	// 	itemAmount = (uint)Random.Range(1, item.maxStackSize);
+	// 	if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
+	// }
+	void Start() {
+		Init(item);
 	}
 	
 	void Update () {
 		float dist = Vector3.Distance(player.position, this.transform.position);
-		Debug.Log(dist.ToString());
 		if (dist <= minDistance && Input.GetKeyDown(KeyCode.E)) {
 			PickUp();
 		} 
@@ -30,5 +32,13 @@ public class ItemBehaviour : MonoBehaviour {
 		Debug.Log("pickingUp");
 		if (Inventory.instance.AddToInventory(this.item, this.itemAmount))
 			Destroy(this.gameObject);
+	}
+
+	public void Init(Item _item) {
+		minDistance = 1.2f;
+		objSprite = item.itemSprite;
+		uint _amount = item.maxStackSize / 2;
+		itemAmount = (uint)Random.Range(1, _amount <= 0 ? 1 : _amount);
+		if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 }

@@ -23,12 +23,16 @@ public class Enemy : MonoBehaviour {
 	void OnDestroy() {
 		byte dropChance = (byte)(100 * Random.value);
 		if (dropChance <= 10) {
-			
+
 		}
 	}
 
 	public void Die() {
 		Destroy(this.gameObject);
+	}
+
+	public void ReceiveDamage(float value) {
+		this.health -=value;
 	}
 
 

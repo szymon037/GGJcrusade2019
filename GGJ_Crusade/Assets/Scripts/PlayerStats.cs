@@ -25,6 +25,7 @@ public class PlayerStats {
 	//actual statistics
 	public Stats playerStatistics;
 	public Dictionary<string, bool> flags;
+	public System.Func<Vector3, float, int> attack = null;
 
 	private PlayerStats() {
 		playerStatistics = new Stats(100f, 100f, 100f, 100f);
@@ -33,6 +34,7 @@ public class PlayerStats {
 		flags["hungerBelowZero"] = false;
 		flags["thirstBelowZero"] = false;
 		flags["atHome"] = false;
+		attack = MainCharacterBehaviour.Attack;
 	}
 
 	public static PlayerStats GetInstance() {

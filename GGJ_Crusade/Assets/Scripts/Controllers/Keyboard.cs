@@ -9,6 +9,7 @@ public class Keyboard : MonoBehaviour {
 		float x = 0f, z = 0f;
 		x = Input.GetAxis("Horizontal") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
 		z = Input.GetAxis("Vertical") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
+		MainCharacterBehaviour.lookDirection = new Vector3(x, 0f, z).normalized;
 		transform.Translate(new Vector3(x, 0, z));
 	}
 }
