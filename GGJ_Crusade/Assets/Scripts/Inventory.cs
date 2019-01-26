@@ -41,7 +41,9 @@ public class Inventory : MonoBehaviour {
 	public InventorySlot currentlyPickedFrom = null;
 
 	public List<Pair<Transform, Transform>> activeBarSlotPairs = new List<Pair<Transform, Transform>>();
-	public Image activeSlotPointer = null;
+	public Image[] activeSlotPointers = null;
+	public Image activePointer = null;
+	bool flag = false;
 
 	void Awake() {
 		inventoryPanel.gameObject.SetActive(false);
@@ -58,11 +60,16 @@ public class Inventory : MonoBehaviour {
 			activeItemBarSlots.Add(child.gameObject.GetComponent<InventorySlot>());
 		}
 		activeSlot = activeItemBarSlots[0];
+		foreach (var im in activeSlotPointers) {
+			im.enabled = false;
+		}
+		activePointer = activeSlotPointers[0];
+		activePointer.enabled = true;
 	}
 
 	void Update() {
 		instance = this;
-
+		//bool flag = false;
 		if (PlayerStats.GetInstance().flags["atHome"] && !inventoryPanel.gameObject.activeSelf) {
 			houseWindow.gameObject.SetActive(!false);
 			List<Transform> first = new List<Transform>(), second = new List<Transform>();
@@ -100,9 +107,27 @@ public class Inventory : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.I) && !PlayerStats.GetInstance().flags["atHome"]) {
 			inventoryPanel.gameObject.SetActive(!inventoryPanel.gameObject.activeSelf);
-			gameplayActiveBar.gameObject.SetActive(false);
+			activePointer.enabled = !inventoryPanel.gameObject.activeSelf;
 		}
+
+		#if DEBUG 
+			if (Input.GetKeyDown(KeyCode.H) && !inventoryPanel.gameObject.activeSelf) PlayerStats.GetInstance().flags["atHome"] = !PlayerStats.GetInstance().flags["atHome"];
+		#endif
+		int result = 0;
+		System.Int32.TryParse(Input.inputString, out result);
+		switch (result) {
+			case 1: case 2: case 3: case 4: case 5:
+				activePointer.enabled = false;
+				activePointer = activeSlotPointers[result - 1];
+				activePointer.enabled = true;
+				activeSlot = activeItemBarSlots[result-1];
+				break;
+			default:
+				break;
+		}
+
 		if (inventoryPanel.gameObject.activeSelf) {
+			activePointer.enabled = !inventoryPanel.gameObject.activeSelf;
 			List<Transform> l = new List<Transform>();
 			foreach (Transform child in gameplayActiveBar) {
 				l.Add(child);
@@ -112,7 +137,9 @@ public class Inventory : MonoBehaviour {
 				x.SetParent(activeBar);
 			}
 			gameplayActiveBar.gameObject.SetActive(false);
+			return;
 		} else {
+			activePointer.enabled = !inventoryPanel.gameObject.activeSelf;
 			List<Transform> l = new List<Transform>();
 			foreach (Transform child in activeBar) {
 				l.Add(child);
@@ -124,6 +151,7 @@ public class Inventory : MonoBehaviour {
 			gameplayActiveBar.gameObject.SetActive(true);
 		}
 		if (houseWindow.gameObject.activeSelf) {
+			activePointer.enabled = !houseWindow.gameObject.activeSelf;
 			List<Transform> l = new List<Transform>();
 			foreach (Transform child in gameplayActiveBar) {
 				l.Add(child);
@@ -132,8 +160,10 @@ public class Inventory : MonoBehaviour {
 			foreach (var x in l) {
 				x.SetParent(targetActiveBar);
 			}
-			gameplayActiveBar.gameObject.SetActive(false);
+			
+				gameplayActiveBar.gameObject.SetActive(false);
 		} else {
+			activePointer.enabled = !houseWindow.gameObject.activeSelf;
 			List<Transform> l = new List<Transform>();
 			foreach (Transform child in targetActiveBar) {
 				l.Add(child);
@@ -142,23 +172,8 @@ public class Inventory : MonoBehaviour {
 			foreach (var x in l) {
 				x.SetParent(gameplayActiveBar);
 			}
-			gameplayActiveBar.gameObject.SetActive(true);
-		}
-		#if DEBUG 
-			if (Input.GetKeyDown(KeyCode.H) && !inventoryPanel.gameObject.activeSelf) PlayerStats.GetInstance().flags["atHome"] = !PlayerStats.GetInstance().flags["atHome"];
-		#endif
-		switch (Input.inputString) {
-			case "1":
-
-				break;
-			case "2":
-				break;
-			case "3":
-				break;
-			case "4":
-				break;
-			case "5":
-				break;
+			
+				gameplayActiveBar.gameObject.SetActive(true);
 		}
 	}
 
