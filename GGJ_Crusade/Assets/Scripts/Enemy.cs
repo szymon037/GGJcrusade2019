@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
+	public string enemyName = "";
+	public float health = 100f;
+	public float speed = 5f;
+	public float attackRange = 2f;
+	public Sprite enemySprite = null;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -13,4 +19,17 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	void OnDestroy() {
+		byte dropChance = (byte)(100 * Random.value);
+		if (dropChance <= 10) {
+			
+		}
+	}
+
+	public void Die() {
+		Destroy(this.gameObject);
+	}
+
+
 }

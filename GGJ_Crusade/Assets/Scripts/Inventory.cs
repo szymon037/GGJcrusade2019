@@ -53,21 +53,26 @@ public class Inventory : MonoBehaviour {
 		return true;
 	}
 
-	public bool AddToInventory(Item item) {
+	public bool AddToInventory(Item item, uint amount) {
 		if (IsFull()) return false;
-		uint stackSize = item.stackSize;
 		foreach (var slot in slots) {
-			if (item.ID == slot.itemRef.ID) {
-				if (stackSize + slot.itemRef.stackSize <= slot.itemRef.maxStackSize) {
-					slot.itemRef.stackSize += stackSize;
-					break;
-				} else continue;
-			} else {
-				slot.Add(item);
+			if (slot.IsEmpty()) {
+				slot.Add(item, amount);
 				break;
+			} else {
+				if (item.itemName == slot.itemRef.itemName) {
+					if (amount + slot.stackSize > slot.itemRef.maxStackSize) continue;
+					else {
+						slot.stackSize += amount;
+						break;
+					}
+				} else {
+					slot.Add(item, amount);
+					break;
+				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public void UseActiveItem() {
@@ -114,7 +119,7 @@ public class Inventory : MonoBehaviour {
 					Debug.Log(temp.parent.name);
 					pickingUp = false;
 					pickUpImage.enabled = false;
-					temp.parent.GetComponent<InventorySlot>().Add(currentlyPickedFrom.itemRef);
+					temp.parent.GetComponent<InventorySlot>().Add(currentlyPickedFrom.itemRef, currentlyPickedFrom.stackSize);
 					currentlyPickedFrom.Clear();
 					currentlyPickedFrom = null;
 					return;

@@ -15,7 +15,7 @@ public class PlayerStats {
 			this.hunger = _hunger;
 			this.thirst = _thirst;
 			this.stamina = _stamina;
-			this.speed = 5f;
+			this.speed = 10f;
 		}
 	}
 

@@ -7,8 +7,8 @@ public class Keyboard : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float x = 0f, z = 0f;
-		x = Input.GetAxis("Horizontal");
-		z = Input.GetAxis("Vertical");
+		x = Input.GetAxis("Horizontal") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
+		z = Input.GetAxis("Vertical") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
 		transform.Translate(new Vector3(x, 0, z));
 	}
 }

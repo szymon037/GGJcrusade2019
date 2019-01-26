@@ -7,8 +7,8 @@ public class XboxController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		float x = 0f, z = 0f;
-		x = Input.GetAxis("GamepadHorizontal");
-		z = Input.GetAxis("GamepadVertical");
+		x = Input.GetAxis("GamepadHorizontal") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
+		z = Input.GetAxis("GamepadVertical") * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed;
 		transform.Translate(new Vector3(x, 0, z));
 	}
 }

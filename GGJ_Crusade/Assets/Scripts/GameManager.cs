@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		DontDestroyOnLoad(this.gameObject);
 		dayTimeCounter = dayTime;
 	}
 	
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void InitHorde() {
-
+		
 	}
 
 	public void EndTheDay() {

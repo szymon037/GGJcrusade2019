@@ -65,6 +65,7 @@
      <Compile Include="Assets\Scripts\ItemRecipes\Recipe.cs" />
      <Compile Include="Assets\Scripts\Items\Item.cs" />
      <Compile Include="Assets\Scripts\MainCharacterBehaviour.cs" />
+     <Compile Include="Assets\Scripts\Pair.cs" />
      <Compile Include="Assets\Scripts\PlayerStats.cs" />
      <None Include="Assets\JsonDotNet\link.xml" />
  <Reference Include="UnityEditor.StandardEvents">

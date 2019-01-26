@@ -2,7 +2,7 @@
 using UnityEngine;
 
 public enum ItemType {
-	Food,
+	Food = 0,
 	Drink,
 	Material,
 	Weapon,
@@ -13,7 +13,6 @@ public enum ItemType {
 public class Item : ScriptableObject {
 	public uint stackSize = 0;
 	public uint maxStackSize = 0;
-	public uint ID = 0;
 
 	public Sprite itemSprite = null;
 
