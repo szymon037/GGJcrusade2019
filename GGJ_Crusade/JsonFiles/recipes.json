@@ -1,0 +1,9 @@
+[
+  {
+    "itemNameToCreate": "Itemname",
+    "amountOfItemToCreate": 0,
+    "resourcesNeeded": {
+      "xD": 10
+    }
+  }
+]
