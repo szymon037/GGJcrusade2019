@@ -70,7 +70,7 @@ public class Inventory : MonoBehaviour {
 	void Update() {
 		instance = this;
 		//bool flag = false;
-		if (PlayerStats.GetInstance().flags["atHome"] && !inventoryPanel.gameObject.activeSelf) {
+		if (PlayerStats.GetInstance().flags["storage"] && !inventoryPanel.gameObject.activeSelf) {
 			houseWindow.gameObject.SetActive(!false);
 			List<Transform> first = new List<Transform>(), second = new List<Transform>();
 			foreach (Transform child in playerInventory) {
@@ -105,13 +105,13 @@ public class Inventory : MonoBehaviour {
 				c.SetParent(activeBar);
 			}
 		}
-		if (Input.GetKeyDown(KeyCode.I) && !PlayerStats.GetInstance().flags["atHome"]) {
+		if (Input.GetKeyDown(KeyCode.I) && !PlayerStats.GetInstance().flags["storage"]) {
 			inventoryPanel.gameObject.SetActive(!inventoryPanel.gameObject.activeSelf);
 			activePointer.enabled = !inventoryPanel.gameObject.activeSelf;
 		}
 
 		#if DEBUG 
-			if (Input.GetKeyDown(KeyCode.H) && !inventoryPanel.gameObject.activeSelf) PlayerStats.GetInstance().flags["atHome"] = !PlayerStats.GetInstance().flags["atHome"];
+			if (Input.GetKeyDown(KeyCode.H) && !inventoryPanel.gameObject.activeSelf) PlayerStats.GetInstance().flags["storage"] = !PlayerStats.GetInstance().flags["storage"];
 		#endif
 		int result = 0;
 		System.Int32.TryParse(Input.inputString, out result);
@@ -197,10 +197,7 @@ public class Inventory : MonoBehaviour {
 						slot.stackSize += amount;
 						break;
 					}
-				} else {
-					slot.Add(item, amount);
-					break;
-				}
+				} else continue;
 			}
 		}
 		return true;
@@ -224,10 +221,6 @@ public class Inventory : MonoBehaviour {
 			case ItemType.Material: 
 				break;
 			case ItemType.Weapon:
-				//miejsce na atak
-				int numberOfHits = PlayerStats.GetInstance().attack(MainCharacterBehaviour.lookDirection, activeSlot.itemRef.itemEffectValue);
-				activeSlot.itemDurability -= numberOfHits * activeSlot.itemRef.durabilityLostPerHit;
-				if (activeSlot.itemDurability <= 0f) activeSlot.Clear();
 				break;
 			case ItemType.Armor: 
 				break;

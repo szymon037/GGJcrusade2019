@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.position = Vector3.MoveTowards(this.transform.position, player.position, 4f);
+		this.transform.position = Vector3.MoveTowards(this.transform.position, player.position, speed * Time.deltaTime);
 		if (attackTimer <= 0f && Vector3.Distance(player.position, this.transform.position) <= 1.5f) {
 			Attack();
 		}
@@ -45,9 +45,12 @@ public class Enemy : MonoBehaviour {
 
 	public void ReceiveDamage(float value) {
 		this.health -=value;
+		Debug.Log(this.health.ToString());
+		if (this.health <= 0f) Die();
 	}
 
 	public void Attack() {
+		Debug.Log("Attacking");
 		Vector3 direction = player.position - this.transform.position;
 		RaycastHit[] hits = Physics.RaycastAll(this.transform.position, direction, 5f);
 		foreach (var hit in hits) {

@@ -9,12 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3839e822eca360e4aa01e8b6872fe61d, type: 3}
-  m_Name: Wood
+  m_Name: Stone
   m_EditorClassIdentifier: 
   stackSize: 0
   maxStackSize: 40
-  itemSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  itemName: Wood
+  itemSprite: {fileID: 0}
+  itemName: Stone
   description: 
   type: 2
   itemEffectValue: 0

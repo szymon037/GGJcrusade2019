@@ -17,6 +17,7 @@ public class ItemBehaviour : MonoBehaviour {
 	
 	void Update () {
 		float dist = Vector3.Distance(player.position, this.transform.position);
+		Debug.Log(this.transform.name + " " + dist.ToString());
 		if (dist <= minDistance && Input.GetKeyDown(KeyCode.E)) {
 			PickUp();
 		} 
@@ -31,8 +32,8 @@ public class ItemBehaviour : MonoBehaviour {
 	public void Init(Item _item) {
 		minDistance = 1.2f;
 		objSprite = item.itemSprite;
-		uint _amount = item.maxStackSize / 2;
-		itemAmount = (uint)Random.Range(1, _amount <= 0 ? 1 : _amount);
+		//uint _amount = item.maxStackSize / 2;
+		itemAmount = 20;//(uint)Random.Range(1, _amount <= 0 ? 1 : _amount);
 		if (player == null) player = GameObject.FindGameObjectWithTag("Player").transform;
 	}
 }

@@ -54,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\Controllers\Keyboard.cs" />
-     <Compile Include="Assets\Scripts\Controllers\XboxController.cs" />
      <Compile Include="Assets\Scripts\CraftingManager.cs" />
      <Compile Include="Assets\Scripts\DungeonGenerator\Node.cs" />
      <Compile Include="Assets\Scripts\DungeonGenerator\Room.cs" />
@@ -68,10 +67,14 @@
      <Compile Include="Assets\Scripts\InventorySlot.cs" />
      <Compile Include="Assets\Scripts\ItemBehaviour.cs" />
      <Compile Include="Assets\Scripts\ItemRecipes\Recipe.cs" />
+     <Compile Include="Assets\Scripts\ItemRecipes\RecipeButton.cs" />
      <Compile Include="Assets\Scripts\Items\Item.cs" />
      <Compile Include="Assets\Scripts\MainCharacterBehaviour.cs" />
+     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
+     <Compile Include="Assets\Scripts\MemiczneZmienneDlaAdama.cs" />
      <Compile Include="Assets\Scripts\Pair.cs" />
      <Compile Include="Assets\Scripts\PlayerStats.cs" />
+     <Compile Include="Assets\Scripts\Table.cs" />
      <Compile Include="Assets\Scripts\UIManager.cs" />
      <None Include="Assets\JsonDotNet\link.xml" />
  <Reference Include="UnityEditor.StandardEvents">

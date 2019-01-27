@@ -35,20 +35,21 @@ public class CraftingManager : MonoBehaviour {
 		fs.Close();
 	}
 
-	public void CreateItem(Item item) {
+	public void CreateItem(string item) {
 		Recipe recipe = null;
 		foreach (var r in recipes) {
-			if (item.itemName == r.itemNameToCreate) {
+			if (item == r.itemNameToCreate) {
 				recipe = r;
 				break;
 			}
 		}
 		if (ValidateRecipe(recipe)) {
-			Inventory.instance.AddToInventory(item, recipe.amountOfItemToCreate);
+			Item temp = allItems.Find(x => x.itemName == item);
+			Inventory.instance.AddToInventory(temp, recipe.amountOfItemToCreate);
 			foreach (var resource in recipe.resourcesNeeded) {
 				bool found = false;
 				foreach (var slot in Inventory.instance.slots) {
-					if (!slot.IsEmpty() && slot.itemRef.itemName == item.itemName) {
+					if (!slot.IsEmpty() && slot.itemRef.itemName == item) {
 						slot.stackSize -= resource.Value;
 						found = true;
 						break;
@@ -56,7 +57,7 @@ public class CraftingManager : MonoBehaviour {
 				}
 				if (found) continue;
 				foreach (var slot in Inventory.instance.activeItemBarSlots) {
-					if (!slot.IsEmpty() && slot.itemRef.itemName == item.itemName) {
+					if (!slot.IsEmpty() && slot.itemRef.itemName == item) {
 						slot.stackSize -= resource.Value;	
 						break;
 					}

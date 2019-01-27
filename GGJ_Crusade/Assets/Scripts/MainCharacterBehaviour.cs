@@ -7,24 +7,23 @@ using System.Linq;
 public class MainCharacterBehaviour : MonoBehaviour {
 
 	public Keyboard keyboard;
-	public XboxController xboxpad;
 	public Camera playerCamera;
-	public static Vector3 lookDirection = new Vector3(0f,0f,0f);
-	public static Vector3 playerPosition = new Vector3(0f, 0,0f);
+	public Vector3 lookDirection = new Vector3(0f,0f,0f);
+	public Vector3 playerPosition = new Vector3(0f, 0,0f);
 	private float constCameraY = 0f;
 	private WaitForSeconds waitTime = new WaitForSeconds(0.25f);
 	public Image keyPrompt = null;
-
+	public static MainCharacterBehaviour instance = null;
 	// Use this for initialization
 	void Start () {
 		keyboard = GetComponent<Keyboard>();
-		xboxpad = GetComponent<XboxController>();
 		StartCoroutine("InteractionCheck");
 		constCameraY = playerCamera.transform.position.y;
 		keyPrompt.enabled = false;
 	}
 
 	void Update() {
+		instance = this;
 		playerCamera.transform.position = new Vector3(this.transform.position.x, constCameraY, this.transform.position.z);
 		playerPosition = this.transform.position;
 
@@ -33,24 +32,22 @@ public class MainCharacterBehaviour : MonoBehaviour {
 		} else {
 			PlayerStats.GetInstance().flags["isHit"] = false;
 		}
-	}
 
-	void GamepadCheck() {
-		string[] gamepads = Input.GetJoystickNames();
-		if (gamepads == null || gamepads.Length <= 0) {
-			xboxpad.enabled = false;
-			keyboard.enabled = true;
-		} else {
-			xboxpad.enabled = true;
-			keyboard.enabled = false;
+		if (Input.GetMouseButtonDown(0)) {
+			if (Inventory.instance.activeSlot.itemRef.type != ItemType.Weapon) Inventory.instance.UseActiveItem();
+			else Attack(Inventory.instance.activeSlot.itemRef.itemEffectValue) ;
 		}
-	}
 
-	IEnumerator InputCheck() {
-		while (true) {
-			GamepadCheck();
-			yield return waitTime;
+		if (!PlayerStats.GetInstance().flags["storage"]) {
+			float x = 0f, z = 0f;
+			x = Input.GetAxis("Horizontal") ;
+			z = Input.GetAxis("Vertical") ;
+			lookDirection = new Vector3(x, 0, z);
+			playerPosition = this.transform.position;
+			transform.Translate(new Vector3(x * Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed, 0f, z* Time.deltaTime * PlayerStats.GetInstance().playerStatistics.speed));
 		}
+
+		
 	}
 
 	bool CheckForInteractions() {
@@ -71,14 +68,20 @@ public class MainCharacterBehaviour : MonoBehaviour {
 		}
 	}
 
-	public static int Attack(Vector3 direction, float damageValue) {
+	public int Attack(float damageValue) {
 		int caughtEnemies = 0;
-
-		RaycastHit[] hitResults = Physics.RaycastAll(playerPosition, direction, 5f);
+		Debug.Log("xD");
+		Debug.DrawRay(playerPosition, lookDirection * 10f, Color.red ,100f);
+		Debug.Log(playerPosition.ToString());
+		Debug.Log("lookdirection:" + (lookDirection * 10).ToString());
+		RaycastHit[] hitResults = Physics.RaycastAll(playerPosition, lookDirection, 10f);
+		Debug.Log(hitResults.Length.ToString());
 		foreach (var hit in hitResults) {
 			if (hit.transform != null) {
+				Debug.Log(hit.transform.name);
 				if (hit.transform.gameObject.CompareTag("Enemy")) {
 					caughtEnemies++;
+					Debug.Log("xD");
 					hit.transform.gameObject.GetComponent<Enemy>().ReceiveDamage(damageValue);
 				}
 			}
