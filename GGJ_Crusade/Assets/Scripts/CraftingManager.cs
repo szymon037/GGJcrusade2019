@@ -35,6 +35,36 @@ public class CraftingManager : MonoBehaviour {
 		fs.Close();
 	}
 
+	public void CreateItem(Item item) {
+		Recipe recipe = null;
+		foreach (var r in recipes) {
+			if (item.itemName == r.itemNameToCreate) {
+				recipe = r;
+				break;
+			}
+		}
+		if (ValidateRecipe(recipe)) {
+			Inventory.instance.AddToInventory(item, recipe.amountOfItemToCreate);
+			foreach (var resource in recipe.resourcesNeeded) {
+				bool found = false;
+				foreach (var slot in Inventory.instance.slots) {
+					if (!slot.IsEmpty() && slot.itemRef.itemName == item.itemName) {
+						slot.stackSize -= resource.Value;
+						found = true;
+						break;
+					}
+				}
+				if (found) continue;
+				foreach (var slot in Inventory.instance.activeItemBarSlots) {
+					if (!slot.IsEmpty() && slot.itemRef.itemName == item.itemName) {
+						slot.stackSize -= resource.Value;	
+						break;
+					}
+				}
+			}
+		}
+	} 
+
 	public bool ValidateRecipe(Recipe recipe) {
 		Dictionary<string ,bool> validatedRecipes = new Dictionary<string, bool>();
 		foreach (var s in recipe.resourcesNeeded.Keys) validatedRecipes[s] = false;
@@ -58,17 +88,18 @@ public class CraftingManager : MonoBehaviour {
 			while (!reader.EndOfStream) lines.Add(reader.ReadLine());
 		}
 		foreach (string line in lines) {
+			print(line);
 			string[] temp = line.Split();
-			string[] newArray = new string[temp.Length - 1];
-			for (int i = 1; i < temp.Length; ++i) {
-				newArray[i - 1] = temp[i];
+			string[] newArray = new string[temp.Length - 2];
+			for (int i = 2; i < temp.Length; ++i) {
+				newArray[i - 2] = temp[i];
 			}
 			List<Pair<string, uint>> pairList = new List<Pair<string, uint>>();
 			for (int j = 0; j < newArray.Length; j += 2) {
 				Pair<string, uint> tempPair = new Pair<string, uint>(newArray[j], System.UInt32.Parse(newArray[j + 1]));
 				pairList.Add(tempPair);
 			}
-			Recipe newRecipe = new Recipe(temp[0], pairList.ToArray());
+			Recipe newRecipe = new Recipe(temp[0], System.UInt32.Parse(temp[1]), pairList.ToArray());
 			recipes.Add(newRecipe);
 		}
 	}

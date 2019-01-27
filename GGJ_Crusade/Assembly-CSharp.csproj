@@ -56,8 +56,13 @@
      <Compile Include="Assets\Scripts\Controllers\Keyboard.cs" />
      <Compile Include="Assets\Scripts\Controllers\XboxController.cs" />
      <Compile Include="Assets\Scripts\CraftingManager.cs" />
+     <Compile Include="Assets\Scripts\DungeonGenerator\Node.cs" />
+     <Compile Include="Assets\Scripts\DungeonGenerator\Room.cs" />
+     <Compile Include="Assets\Scripts\DungeonGenerator\spawnDungeon.cs" />
+     <Compile Include="Assets\Scripts\DungeonGenerator\Tree.cs" />
      <Compile Include="Assets\Scripts\Enemy.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
+     <Compile Include="Assets\Scripts\House.cs" />
      <Compile Include="Assets\Scripts\HouseStorage.cs" />
      <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\InventorySlot.cs" />
@@ -67,7 +72,7 @@
      <Compile Include="Assets\Scripts\MainCharacterBehaviour.cs" />
      <Compile Include="Assets\Scripts\Pair.cs" />
      <Compile Include="Assets\Scripts\PlayerStats.cs" />
-     <Compile Include="Assets\Scripts\ReferenceInventorySlot.cs" />
+     <Compile Include="Assets\Scripts\UIManager.cs" />
      <None Include="Assets\JsonDotNet\link.xml" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Maciek/Desktop/GGJ/GGJcrusade2019/GGJ_Crusade/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

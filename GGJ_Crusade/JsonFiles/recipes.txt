@@ -1,1 +1,1 @@
-Itemname xD 10
+Torch 1 Cloth 2 Wood 10

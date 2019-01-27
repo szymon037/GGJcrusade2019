@@ -40,10 +40,10 @@ public class Inventory : MonoBehaviour {
 
 	public InventorySlot currentlyPickedFrom = null;
 
-	public List<Pair<Transform, Transform>> activeBarSlotPairs = new List<Pair<Transform, Transform>>();
+	public Transform itemTextDisplay;
+
 	public Image[] activeSlotPointers = null;
 	public Image activePointer = null;
-	bool flag = false;
 
 	void Awake() {
 		inventoryPanel.gameObject.SetActive(false);

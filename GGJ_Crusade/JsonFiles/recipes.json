@@ -1,9 +1,10 @@
 [
   {
-    "itemNameToCreate": "Itemname",
-    "amountOfItemToCreate": 0,
+    "itemNameToCreate": "Torch",
+    "amountOfItemToCreate": 1,
     "resourcesNeeded": {
-      "xD": 10
+      "Cloth": 2,
+      "Wood": 10
     }
   }
 ]

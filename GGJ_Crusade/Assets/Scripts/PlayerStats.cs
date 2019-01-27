@@ -10,10 +10,11 @@ public class PlayerStats {
 		public float stamina;
 		public float speed;
 		public float maxHealth;
+		public float maxHunger;
 
 		public Stats(float _health, float _hunger, float _thirst, float _stamina) {
 			this.health = this.maxHealth = _health;
-			this.hunger = _hunger;
+			this.hunger = this.maxHunger = _hunger;
 			this.thirst = _thirst;
 			this.stamina = _stamina;
 			this.speed = 10f;
@@ -51,11 +52,13 @@ public class PlayerStats {
 		if (this.playerStatistics.health < 0f) this.playerStatistics.health = 0f; 
 		this.flags["isHit"] = true;
 		hitTimer = 0.5f;
+		UIManager.instance.UpdateSprites();
 	}
 
 	public void RestoreHealth(float value) {
 		this.playerStatistics.health += value;
 		if (this.playerStatistics.health > this.playerStatistics.maxHealth) this.playerStatistics.health = this.playerStatistics.maxHealth;
+		UIManager.instance.UpdateSprites();
 	}
 
 	public void ReduceStamina(float value) {
@@ -66,10 +69,12 @@ public class PlayerStats {
 	public void ModifyHungerMeter(float value) {
 		this.playerStatistics.hunger += value;
 		if (this.playerStatistics.hunger < 0f) this.playerStatistics.hunger = 0f;
+		UIManager.instance.UpdateSprites();
 	}
 
 	public void ModifyThirstMeter(float value) {
 		this.playerStatistics.thirst += value;
 		if (this.playerStatistics.thirst < 0f) this.playerStatistics.thirst = 0f;
+		UIManager.instance.UpdateSprites();
 	}
 }
